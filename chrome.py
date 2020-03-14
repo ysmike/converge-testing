@@ -16,14 +16,13 @@ class HomePageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # TODO: Add a file for MS Edge and use TestSuite to combine the two
-        cls.driver = webdriver.Chrome(executable_path="./chromedriver")
+        cls.driver = webdriver.Chrome(executable_path="chromedriver")
         # maximize window to expand the hamburger menu
         cls.driver.maximize_window()
         cls.driver.get("https://ywamconverge.org/")
 
     def test_status_code(self):
         "Validate all hyperlinks on the homepage via the requests module"
-        print(f"\nTesting {len(links)} links on the homepage...\n")
         num_broken_links = 0
         broken_links = {}
         links = [
@@ -31,6 +30,7 @@ class HomePageTest(unittest.TestCase):
             for link in self.driver.find_elements_by_tag_name("a")
             if link.get_attribute("href") != "javascript:void(0)"
         ]
+        print(f"\nTesting {len(links)} links on the homepage...\n")
         for link in links:
             response = requests.get(link)
             if response.status_code == 200:
