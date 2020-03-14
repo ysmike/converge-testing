@@ -6,7 +6,6 @@
 ? Should I write a shell script to install the above dependencies?
 """
 
-# TODO: Add requests to requirements.txt
 import requests
 import unittest
 from selenium import webdriver
