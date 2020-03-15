@@ -28,7 +28,7 @@ class HomePageTest(unittest.TestCase):
         links = [
             link.get_attribute("href")
             for link in self.driver.find_elements_by_tag_name("a")
-            if link.get_attribute("href") != "javascript:void(0)"
+            if not link.get_attribute("href").startswith("java")
         ]
         print(f"\nTesting {len(links)} links on the homepage...\n")
         for link in links:
