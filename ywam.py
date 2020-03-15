@@ -4,6 +4,7 @@
 * Links to the drivers can be found at https://www.selenium.dev/downloads
 ? On what OS & browser version will the script run? Issue with Edge driver on MacOS
 ? Should I write a shell script to install the above dependencies?
+# flake8 ywam.py --ignore E501
 """
 
 import requests
