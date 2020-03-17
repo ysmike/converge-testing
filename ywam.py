@@ -11,6 +11,10 @@ import requests
 import unittest
 from selenium import webdriver
 
+# Set max redirects to 3 from default of 30
+requests = requests.Session()
+requests.max_redirects = 3
+
 
 class HomePageTest(unittest.TestCase):
     # implement class method to use one driver instance for all tests
@@ -18,9 +22,11 @@ class HomePageTest(unittest.TestCase):
     def setUpClass(cls):
         # TODO: Add a file for MS Edge and use TestSuite to combine the two
         cls.driver = webdriver.Chrome(executable_path="chromedriver")
-        # maximize window to expand the hamburger menu
+        # maximize window to expand the hamburger menu and grab links
         cls.driver.maximize_window()
-        cls.driver.get("https://ywamconverge.org/")
+        # cls.driver.get("https://glenis.ywamconverge.org/")  # L10N by Glenis
+        cls.driver.get("https://dev02.ywamconverge.org/")  # India
+        # cls.driver.get("https://ywamconverge.org/") # Current
 
     def test_status_code(self):
         "Validate all hyperlinks on the homepage via the requests module"
@@ -33,11 +39,14 @@ class HomePageTest(unittest.TestCase):
         ]
         print(f"\nTesting {len(links)} links on the homepage...\n")
         for link in links:
-            response = requests.get(link)
-            if response.status_code == 200:
-                continue
-            broken_links[link] = response.status_code
-            num_broken_links += 1
+            try:
+                response = requests.get(link)
+                if response.status_code != 200:
+                    raise Exception("Status code is not 200")
+            except Exception as e:
+                print(link, e, sep=" --> ")
+                broken_links[link] = response.status_code
+                num_broken_links += 1
         self.assertFalse(
             num_broken_links,
             f"\n{num_broken_links} broken link(s) found:\n{broken_links}",
