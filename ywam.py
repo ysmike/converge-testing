@@ -21,7 +21,7 @@ class HomePageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # TODO: Add a file for MS Edge and use TestSuite to combine the two
-        cls.driver = webdriver.Chrome(executable_path="chromedriver")
+        cls.driver = webdriver.Chrome(executable_path="./chromedriver")
         # maximize window to expand the hamburger menu and grab links
         cls.driver.maximize_window()
         # cls.driver.get("https://glenis.ywamconverge.org/")  # L10N by Glenis
@@ -44,7 +44,7 @@ class HomePageTest(unittest.TestCase):
                 if response.status_code != 200:
                     raise Exception("Status code is not 200")
             except Exception as e:
-                print(link, e, sep=" --> ")
+                print(link, e, sep=" --> ", end="\n\n")
                 broken_links[link] = response.status_code
                 num_broken_links += 1
         self.assertFalse(
