@@ -1,5 +1,5 @@
 # YWAM Converge Web UI Test Suite
-> Web browser testing for YWAM Converge with Selenium & pytest
+Web browser testing for YWAM Converge with Selenium & pytest
 
 ## Prerequisites: 
 - python3
