@@ -7,7 +7,7 @@ import pytest
 
 @pytest.mark.usefixtures("browser")
 class TestSearchInterships:
-    def test_apply(self):
+    def test_apply_text(self):
         # xpath is indexed from 1, not 0
         link_xpath = "//div[@class='secondary_nav_links']/li[2]"
         apply_link = self.driver.find_element_by_xpath(link_xpath)
@@ -16,4 +16,8 @@ class TestSearchInterships:
         header_text = self.driver.find_element_by_xpath(text_xpath).text
         assert header_text == "Student Setup Application"
         # ! self.driver.back() not necessary when using pytest-xdist
+        # ? remove to continue testing on forms?
         self.driver.back()
+
+    def test_apply_forms(self):
+        pass
