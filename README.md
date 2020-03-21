@@ -10,6 +10,6 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium 
 - pytest-xdist
 - requests
   
-> Make sure to download the drivers for the correct OS & browser version. Place the browsers in root directory. Links to the drivers can be found [here](https://www.selenium.dev/downloads)
-- browsers
-- browser drivers
+> Make sure to download the drivers for the correct OS & browser version. Place the browsers in root directory.
+- browsers (Chrome, MS Edge, Firefox, etc.)
+- [browser drivers](https://www.selenium.dev/downloads)
