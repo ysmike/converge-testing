@@ -1,5 +1,5 @@
 # YWAM Converge Web UI Test Suite
-Web browser testing for YWAM Converge with Selenium & pytest
+Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium & pytest
 
 ## Prerequisites: 
 - python3
@@ -10,6 +10,6 @@ Web browser testing for YWAM Converge with Selenium & pytest
 - pytest-xdist
 - requests
   
-> Make sure to download the drivers for the correct OS & browser version. Place the browsers in root directory. Links to the drivers can be found at https://www.selenium.dev/downloads
+> Make sure to download the drivers for the correct OS & browser version. Place the browsers in root directory. Links to the drivers can be found [here](https://www.selenium.dev/downloads)
 - browsers
 - browser drivers
