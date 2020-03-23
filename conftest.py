@@ -8,6 +8,7 @@ from selenium import webdriver
 
 @pytest.fixture(scope="session")
 def browser(request):
+    # TODO: Add args for selecting different/(if possible all) browsers
     driver = webdriver.Chrome("./chromedriver")
     session = request.node
     for item in session.items:
