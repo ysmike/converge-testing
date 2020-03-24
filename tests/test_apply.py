@@ -28,7 +28,7 @@ class TestSearchInterships:
             headers = next(csv_reader)
             for row in csv_reader:
                 form = dict(zip(headers, row))
-                # ? select each form by xpath or use tab to complete?
+                # ? select each form by xpath or use tabs to jump between forms?
                 int_xpath = "//select[@name='your_project_select']"
                 int_sel = Select(self.driver.find_element_by_xpath(int_xpath))
                 int_sel.select_by_visible_text(form[header[0]])
