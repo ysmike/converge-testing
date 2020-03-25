@@ -4,12 +4,9 @@
 
 import csv
 import time
+import uuid
+
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 @pytest.mark.usefixtures("browser")
@@ -30,6 +27,7 @@ class TestSearchInterships:
             headers = next(csv_reader)
             for row in csv_reader:
                 form = dict(zip(headers, row))
+                
                 # Your Internship
                 dropdown_xpath = "//span[@id='select2-chosen-2']"
                 self.driver.find_element_by_xpath(dropdown_xpath).click()
@@ -37,24 +35,55 @@ class TestSearchInterships:
                 self.driver.find_element_by_xpath(choice_xpath).click()
                 text_xpath = "//div[@class='new-student-header']/h1"
                 header_text = self.driver.find_element_by_xpath(text_xpath).click()
-                # Your Session
-                dropdown_xpath = "//span[contains(text(),'Choose a session')]"
-                wait = WebDriverWait(self.driver, 10)
-                dropdown = wait.until(
-                    ec.visibility_of_element_located(
-                        (
-                            By.XPATH,
-                            "//select[@id='student_application_project_session_id']/option[@value>0]",
-                        )
-                    )
-                )
-                dropdown.click()
-                self.driver.find_element_by_xpath(dropdown_xpath).click()
+                
+                # Your Sessions
+                # sleep to load 'Your Sessions' dropdown
+                # neither pytest's expected_conditions nor implicitly_wait
+                # nor reordering the code toward the bottom worked
+                time.sleep(7)
+                dropdown_id = 's2id_student_application_project_session_id'
+                self.driver.find_element_by_id(dropdown_id).click()
                 choice_xpath = f"//div[contains(text(),'{form[headers[1]]}')]"
                 self.driver.find_element_by_xpath(choice_xpath).click()
+                
                 # First Name
                 fn_xpath = (
                     "//input[@id='student_application_student_attributes_first_name']"
                 )
                 fn_el = self.driver.find_element_by_xpath(fn_xpath)
                 fn_el.send_keys(form[headers[2]])
+                
+                # Last Name
+                ln_xpath = (
+                    "//input[@id='student_application_student_attributes_last_name']"
+                )
+                ln_el = self.driver.find_element_by_xpath(ln_xpath)
+                ln_el.send_keys(form[headers[3]])
+
+                # Email
+                email_xpath = (
+                    "//input[@id='student_application_student_attributes_login_attributes_email']"
+                )
+                email_el = self.driver.find_element_by_xpath(email_xpath)
+                email = form[headers[4]].replace('email', 'email_' + uuid.uuid4().hex)
+                email_el.send_keys(email)
+                
+                # Password
+                pw_xpath = (
+                    "//input[@id='student_application_student_attributes_login_attributes_password']"
+                )
+                pw_el = self.driver.find_element_by_xpath(pw_xpath)
+                pw_el.send_keys(form[headers[5]])
+                
+                # Password Confirm
+                pwc_xpath = (
+                    "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
+                )
+                pwc_el = self.driver.find_element_by_xpath(pwc_xpath)
+                pwc_el.send_keys(form[headers[6]])
+
+                
+
+    
+        
+        
