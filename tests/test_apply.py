@@ -82,8 +82,10 @@ class TestSearchInterships:
                 pwc_el = self.driver.find_element_by_xpath(pwc_xpath)
                 pwc_el.send_keys(form[headers[6]])
 
-                
-
+    # return to homepage via the global variable, CONVERGE_URL, in conftest.py
+    @pytest.mark.usefixtures("api_url")
+    def test_return_to_home(self, api_url):
+        self.driver.get(api_url)
     
         
         
