@@ -3,8 +3,13 @@
 """
 
 import csv
+import time
 import pytest
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 @pytest.mark.usefixtures("browser")
@@ -17,26 +22,39 @@ class TestSearchInterships:
         text_xpath = "//div[@class='new-student-header']/h1"
         header_text = self.driver.find_element_by_xpath(text_xpath).text
         assert header_text == "Student Setup Application"
-        # ! self.driver.back() not necessary when using pytest-xdist
-        # ? remove to continue testing on forms?
-        self.driver.back()
 
     def test_apply_forms(self):
-        FILE_PATH = "forms/apply.csv"
+        FILE_PATH = "tests/forms/apply.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
             headers = next(csv_reader)
             for row in csv_reader:
                 form = dict(zip(headers, row))
-                # ? select each form by xpath or use tabs to jump between forms?
-                int_xpath = "//select[@name='your_project_select']"
-                int_sel = Select(self.driver.find_element_by_xpath(int_xpath))
-                int_sel.select_by_visible_text(form[header[0]])
-                # int_sel.select_by_value('348')
-                # int_sel.select_by_index(2)
-
-                sess_xpath = "//select[@name='student_application[project_session_id]']"
-                sess_sel = Select(self.driver.find_element_by_xpath(sess_xpath))
-                int_sel.select_by_visible_text(
-                    "Ruby on Rails, Mobile, or Salesforce Tech"
+                # Your Internship
+                dropdown_xpath = "//span[@id='select2-chosen-2']"
+                self.driver.find_element_by_xpath(dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[0]]}')]"
+                self.driver.find_element_by_xpath(choice_xpath).click()
+                text_xpath = "//div[@class='new-student-header']/h1"
+                header_text = self.driver.find_element_by_xpath(text_xpath).click()
+                # Your Session
+                dropdown_xpath = "//span[contains(text(),'Choose a session')]"
+                wait = WebDriverWait(self.driver, 10)
+                dropdown = wait.until(
+                    ec.visibility_of_element_located(
+                        (
+                            By.XPATH,
+                            "//select[@id='student_application_project_session_id']/option[@value>0]",
+                        )
+                    )
                 )
+                dropdown.click()
+                self.driver.find_element_by_xpath(dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[1]]}')]"
+                self.driver.find_element_by_xpath(choice_xpath).click()
+                # First Name
+                fn_xpath = (
+                    "//input[@id='student_application_student_attributes_first_name']"
+                )
+                fn_el = self.driver.find_element_by_xpath(fn_xpath)
+                fn_el.send_keys(form[headers[2]])
