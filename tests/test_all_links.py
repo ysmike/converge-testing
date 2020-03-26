@@ -5,6 +5,8 @@
 import requests
 import pytest
 
+from selenium.webdriver.common.by import By
+
 # Set max redirects to 3 from default of 30
 r = requests.Session()
 r.max_redirects = 3
@@ -17,7 +19,7 @@ class TestLinks:
         broken_links = {}
         links = [
             link.get_attribute("href")
-            for link in self.driver.find_elements_by_tag_name("a")
+            for link in self.driver.find_elements(By.TAG_NAME, "a")
             if not link.get_attribute("href").startswith("java")
         ]
         print(f"\nTesting {len(links)} links on the homepage...\n")
