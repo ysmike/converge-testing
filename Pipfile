@@ -12,6 +12,7 @@ requests = "*"
 selenium = "*"
 pytest = "*"
 pytest-xdist = "*"
+atomicwrites = "*"
 
 [requires]
 python_version = "3.7"
