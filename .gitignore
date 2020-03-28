@@ -143,3 +143,9 @@ cython_debug/
 
 # MacOS custom attributes of the current directory
 .DS_Store
+
+# Browser drivers
+chromedriver
+msedgedriver
+chromedriver.exe
+msedgedriver.exe
