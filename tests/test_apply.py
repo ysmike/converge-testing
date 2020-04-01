@@ -41,9 +41,12 @@ class TestSearchInterships:
                 # sleep to load 'Your Sessions' dropdown
                 # neither pytest's expected_conditions nor implicitly_wait
                 # nor reordering the code toward the bottom worked
+                # TODO: consider a while loop continuously clicking & selecting until the wanted field is selected
                 time.sleep(7)
-                dropdown_id = "//div[@id='s2id_student_application_project_session_id']"
-                self.driver.find_element(By.XPATH, dropdown_id).click()
+                dropdown_xpath = (
+                    "//div[@id='s2id_student_application_project_session_id']"
+                )
+                self.driver.find_element(By.XPATH, dropdown_xpath).click()
                 choice_xpath = f"//div[contains(text(),'{form[headers[1]]}')]"
                 self.driver.find_element(By.XPATH, choice_xpath).click()
 
@@ -77,32 +80,37 @@ class TestSearchInterships:
                 pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
                 pwc_el.send_keys(form[headers[6]])
 
-                # # Marital Status
-                # married_xpath = "//div[@id='s2id_student_application_student_attributes_marital_status']//a[@class='select2-choice select2-default']"
-                # married_el = self.driver.find_element(By.XPATH, married_xpath)
-                # married_el.send_keys(form[headers[7]])
+                # Marital Status
+                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_marital_status']//a[@class='select2-choice select2-default']"
+                self.driver.find_element(By.XPATH, dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[7]]}')]"
+                self.driver.find_element(By.XPATH, choice_xpath).click()
 
-                # # Birth Year
-                # pwc_xpath = "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
-                # pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
-                # pwc_el.send_keys(form[headers[8]])
+                # Birth Year
+                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_1i']//b"
+                self.driver.find_element(By.XPATH, dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[8]]}')]"
+                self.driver.find_element(By.XPATH, choice_xpath).click()
 
-                # # Birth Month
-                # pwc_xpath = "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
-                # pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
-                # pwc_el.send_keys(form[headers[9]])
+                # Birth Month
+                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_2i']//b"
+                self.driver.find_element(By.XPATH, dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[9]]}')]"
+                self.driver.find_element(By.XPATH, choice_xpath).click()
 
-                # # Birth Day
-                # pwc_xpath = "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
-                # pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
-                # pwc_el.send_keys(form[headers[10]])
+                # Birth Day
+                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_3i']//b"
+                self.driver.find_element(By.XPATH, dropdown_xpath).click()
+                choice_xpath = f"//div[contains(text(),'{form[headers[10]]}')]"
+                self.driver.find_element(By.XPATH, choice_xpath).click()
 
-                # # Gender
-                # pwc_xpath = "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
-                # pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
-                # pwc_el.send_keys(form[headers[11]])
+                # Gender
+                gender_xpath = (
+                    "//input[@id='student_application_student_attributes_gender_male']"
+                )
+                self.driver.find_element(By.XPATH, gender_xpath).click()
 
-    # return to homepage via the global variable, CONVERGE_URL, in conftest.py
+    # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
     @pytest.mark.usefixtures("api_url")
     def test_return_to_home(self, api_url):
         self.driver.get(api_url)
