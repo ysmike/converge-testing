@@ -14,7 +14,7 @@ from selenium.webdriver.common.by import By
 
 @pytest.mark.usefixtures("browser")
 class TestSearchInterships:
-    # ******************* CUSTOM FUNCTIONS *******************#
+    # ******************* HELPER FUNCTIONS *******************#
     def select_when_visible(self, dropdown_xpath, selection_xpath):
         while True:
             try:
@@ -25,8 +25,8 @@ class TestSearchInterships:
                 continue
             return
 
-    def input_text(self, xpath, num):
-        self.driver.find_element(By.XPATH, xpath).send_keys(form[headers[num]])
+    def input_text(self, xpath, text):
+        self.driver.find_element(By.XPATH, xpath).send_keys(text)
 
     # ******************* TESTS BEGIN HERE *******************#
     def test_apply_text(self):
@@ -47,132 +47,124 @@ class TestSearchInterships:
                 form = dict(zip(headers, row))
 
                 # Your Internship
-                dropdown_xpath = "//span[@id='select2-chosen-2']"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[0]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//span[@id='select2-chosen-2']",
+                    f"//div[contains(text(),'{form[headers[0]]}')]",
+                )
 
                 # Your Sessions
-                # sleep to load 'Your Sessions' dropdown
-                # neither pytest's expected_conditions nor implicitly_wait
-                # nor reordering the code toward the bottom worked
-                # TODO: consider a while loop continuously clicking & selecting until the wanted field is selected
-                # dropdown_xpath = (
-                #     "//div[@id='s2id_student_application_project_session_id']"
-                # )
-                # selection_xpath = f"//div[contains(text(),'{form[headers[1]]}')]"
                 self.select_when_visible(
                     "//div[@id='s2id_student_application_project_session_id']",
                     f"//div[contains(text(),'{form[headers[1]]}')]",
                 )
 
                 # First Name
-                fn_xpath = (
-                    "//input[@id='student_application_student_attributes_first_name']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_first_name']",
+                    form[headers[2]],
                 )
-                fn_el = self.driver.find_element(By.XPATH, fn_xpath)
-                fn_el.send_keys(form[headers[2]])
 
                 # Last Name
-                ln_xpath = (
-                    "//input[@id='student_application_student_attributes_last_name']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_last_name']",
+                    form[headers[3]],
                 )
-                ln_el = self.driver.find_element(By.XPATH, ln_xpath)
-                ln_el.send_keys(form[headers[3]])
 
                 # Email
-                email_xpath = "//input[@id='student_application_student_attributes_login_attributes_email']"
-                email_el = self.driver.find_element(By.XPATH, email_xpath)
-                email = form[headers[4]].replace("email", "email_" + uuid.uuid4().hex)
-                email_el.send_keys(email)
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_login_attributes_email']",
+                    form[headers[4]],
+                )
 
                 # Password
-                pw_xpath = "//input[@id='student_application_student_attributes_login_attributes_password']"
-                pw_el = self.driver.find_element(By.XPATH, pw_xpath)
-                pw_el.send_keys(form[headers[5]])
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_login_attributes_password']",
+                    form[headers[5]],
+                )
 
                 # Password Confirm
-                pwc_xpath = "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']"
-                pwc_el = self.driver.find_element(By.XPATH, pwc_xpath)
-                pwc_el.send_keys(form[headers[6]])
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']",
+                    form[headers[6]],
+                )
 
                 # Marital Status
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_marital_status']//a[@class='select2-choice select2-default']"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[7]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_marital_status']//a[@class='select2-choice select2-default']",
+                    f"//div[contains(text(),'{form[headers[7]]}')]",
+                )
 
                 # Birth Year
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_1i']//b"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[8]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_birthday_1i']//b",
+                    f"//div[contains(text(),'{form[headers[8]]}')]",
+                )
 
                 # Birth Month
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_2i']//b"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[9]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_birthday_2i']//b",
+                    f"//div[contains(text(),'{form[headers[9]]}')]",
+                )
 
                 # Birth Day
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_birthday_3i']//b"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[10]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_birthday_3i']//b",
+                    f"//div[contains(text(),'{form[headers[10]]}')]",
+                )
 
                 # Gender
-                gender_xpath = f"//label[@id='student_application_student_attributes_gender_{form[headers[11]].lower()}']"
+                gender_xpath = (
+                    f"//label[contains(text(), '{form[headers[11]].lower()}')]"
+                )
                 self.driver.find_element(By.XPATH, gender_xpath).click()
 
                 # St Address
-                st_xpath = "//input[@id='student_application_student_attributes_street_address']"
-                st_el = self.driver.find_element(By.XPATH, st_xpath)
-                st_el.send_keys(form[headers[12]])
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_street_address']",
+                    form[headers[12]],
+                )
 
                 # City
-                city_xpath = (
-                    "//input[@id='student_application_student_attributes_city']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_city']",
+                    form[headers[13]],
                 )
-                city_el = self.driver.find_element(By.XPATH, city_xpath)
-                city_el.send_keys(form[headers[13]])
 
                 # State
-                state_xpath = (
-                    "//input[@id='student_application_student_attributes_state']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_state']",
+                    form[headers[14]],
                 )
-                state_el = self.driver.find_element(By.XPATH, state_xpath)
-                state_el.send_keys(form[headers[14]])
 
                 # Postal Code
-                postalcode_xpath = (
-                    "//input[@id='student_application_student_attributes_postal_code']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_postal_code']",
+                    form[headers[15]],
                 )
-                postalcode_el = self.driver.find_element(By.XPATH, postalcode_xpath)
-                postalcode_el.send_keys(form[headers[15]])
 
                 # Country
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_country']//a[@class='select2-selection select2-default']"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[text()='{form[headers[16]]}']"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_country']//a[@class='select2-choice select2-default']",
+                    f"//div[text()='{form[headers[16]]}']",
+                )
 
                 # Preferred Phone
-                phone_xpath = "//input[@id='student_application_student_attributes_preferred_phone']"
-                phone_el = self.driver.find_element(By.XPATH, phone_xpath)
-                phone_el.send_keys(form[headers[17]])
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_preferred_phone']",
+                    form[headers[17]],
+                )
 
                 # Phone Type
-                dropdown_xpath = "//div[@id='s2id_student_application_student_attributes_phone_type']//a[@class='select2-selection select2-default']"
-                self.driver.find_element(By.XPATH, dropdown_xpath).click()
-                selection_xpath = f"//div[contains(text(),'{form[headers[18]]}')]"
-                self.driver.find_element(By.XPATH, selection_xpath).click()
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_phone_type']//a[@class='select2-choice select2-default']",
+                    form[headers[18]],
+                )
 
                 # Organization
-                org_xpath = (
-                    "//input[@id='student_application_student_attributes_organization']"
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_organization']",
+                    form[headers[19]],
                 )
-                org_el = self.driver.find_element(By.XPATH, org_xpath)
-                org_el.send_keys(form[headers[19]])
 
                 # How did you learn about Converge?
                 hearfrom_xpath = f"//label[contains(text(), '{form[headers[20]]}')]"
@@ -181,6 +173,7 @@ class TestSearchInterships:
                 # Applied Before?
                 appliedbefore_xpath = f"//label[text()='{form[headers[21]]}']"
                 self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
+                time.sleep(20)
 
     # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
     @pytest.mark.usefixtures("api_url")
