@@ -20,7 +20,7 @@ class TestSearchInterships:
             try:
                 self.driver.find_element(By.XPATH, dropdown_xpath).click()
                 self.driver.find_element(By.XPATH, selection_xpath).click()
-                time.sleep(0.5)
+                time.sleep(0.2)
             except:
                 continue
             return
@@ -38,8 +38,8 @@ class TestSearchInterships:
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
         assert header_text == "Student Setup Application"
 
-    def test_apply_forms(self):
-        FILE_PATH = "tests/forms/apply.csv"
+    def test_apply_forms_pg1(self):
+        FILE_PATH = "tests/forms/apply1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
             headers = next(csv_reader)
@@ -157,7 +157,7 @@ class TestSearchInterships:
                 # Phone Type
                 self.select_when_visible(
                     "//div[@id='s2id_student_application_student_attributes_phone_type']//a[@class='select2-choice select2-default']",
-                    form[headers[18]],
+                    f"//div[text()='{form[headers[18]]}']",
                 )
 
                 # Organization
@@ -173,7 +173,32 @@ class TestSearchInterships:
                 # Applied Before?
                 appliedbefore_xpath = f"//label[text()='{form[headers[21]]}']"
                 self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
-                time.sleep(20)
+
+    # def test_apply_forms_pg2(self):
+    #     FILE_PATH = "tests/forms/apply2.csv"
+    #     with open(FILE_PATH) as csv_file:
+    #         csv_reader = csv.reader(csv_file, delimiter=",")
+    #         headers = next(csv_reader)
+    #         for row in csv_reader:
+    #             form = dict(zip(headers, row))
+
+    #             # Your Internship
+    #             self.select_when_visible(
+    #                 "//span[@id='select2-chosen-2']",
+    #                 f"//div[contains(text(),'{form[headers[0]]}')]",
+    #             )
+
+    #             # Your Sessions
+    #             self.select_when_visible(
+    #                 "//div[@id='s2id_student_application_project_session_id']",
+    #                 f"//div[contains(text(),'{form[headers[1]]}')]",
+    #             )
+
+    #             # First Name
+    #             self.input_text(
+    #                 "//input[@id='student_application_student_attributes_first_name']",
+    #                 form[headers[2]],
+    #             )
 
     # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
     @pytest.mark.usefixtures("api_url")
