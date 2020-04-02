@@ -1,11 +1,8 @@
-"""
-* Create a fixture as to use a single browser for the session
-"""
-
 import pytest
 from selenium import webdriver
 
 
+# Create a fixture as to use a single browser for the session
 @pytest.fixture(scope="session")
 def browser(request):
     # TODO: Add args for selecting different/(if possible all) browsers
@@ -24,7 +21,7 @@ def browser(request):
     driver.quit()
 
 
-# Set global variable to return to homepage
+# Set a global variable to return to homepage
 @pytest.fixture(scope="session")
 def api_url():
     return CONVERGE_URL
