@@ -22,6 +22,7 @@ def browser(request):
 
 
 # Set a global variable to return to homepage
+# TODO: Change global variable to work with xdist
 @pytest.fixture(scope="session")
 def api_url():
     return CONVERGE_URL
