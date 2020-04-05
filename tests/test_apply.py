@@ -39,7 +39,7 @@ class TestSearchInterships:
         assert header_text == "Student Setup Application"
 
     def test_apply_forms_pg1(self):
-        FILE_PATH = "tests/forms/apply1.csv"
+        FILE_PATH = "tests/forms/apply_pg1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
             headers = next(csv_reader)
@@ -175,7 +175,7 @@ class TestSearchInterships:
                 self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
 
     # def test_apply_forms_pg2(self):
-    #     FILE_PATH = "tests/forms/apply2.csv"
+    #     FILE_PATH = "tests/forms/apply_pg2.csv"
     #     with open(FILE_PATH) as csv_file:
     #         csv_reader = csv.reader(csv_file, delimiter=",")
     #         headers = next(csv_reader)
