@@ -20,7 +20,7 @@ class TestSearchInterships:
             try:
                 self.driver.find_element(By.XPATH, dropdown_xpath).click()
                 self.driver.find_element(By.XPATH, selection_xpath).click()
-                time.sleep(0.2)
+                time.sleep(0.05)
             except:
                 continue
             return
@@ -73,7 +73,7 @@ class TestSearchInterships:
                 # Email
                 self.input_text(
                     "//input[@id='student_application_student_attributes_login_attributes_email']",
-                    form[headers[4]],
+                    form[headers[4]].replace("email", "email_" + uuid.uuid4().hex),
                 )
 
                 # Password
@@ -174,31 +174,121 @@ class TestSearchInterships:
                 appliedbefore_xpath = f"//label[text()='{form[headers[21]]}']"
                 self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
 
-    # def test_apply_forms_pg2(self):
-    #     FILE_PATH = "tests/forms/apply_pg2.csv"
-    #     with open(FILE_PATH) as csv_file:
-    #         csv_reader = csv.reader(csv_file, delimiter=",")
-    #         headers = next(csv_reader)
-    #         for row in csv_reader:
-    #             form = dict(zip(headers, row))
+                # Save & Continue to Step 2
+                save_xpath = "//form[@id='new_student']//input[@name='commit']"
+                self.driver.find_element(By.XPATH, save_xpath).click()
 
-    #             # Your Internship
-    #             self.select_when_visible(
-    #                 "//span[@id='select2-chosen-2']",
-    #                 f"//div[contains(text(),'{form[headers[0]]}')]",
-    #             )
+    def test_apply_forms_pg2(self):
+        FILE_PATH = "tests/forms/apply_pg2.csv"
+        with open(FILE_PATH) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=",")
+            headers = next(csv_reader)
+            for row in csv_reader:
+                form = dict(zip(headers, row))
 
-    #             # Your Sessions
-    #             self.select_when_visible(
-    #                 "//div[@id='s2id_student_application_project_session_id']",
-    #                 f"//div[contains(text(),'{form[headers[1]]}')]",
-    #             )
+                # Passions
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_passions']//ul[@class='select2-choices']",
+                    f"//div[contains(text(),'{form[headers[0]]}')]",
+                )
 
-    #             # First Name
-    #             self.input_text(
-    #                 "//input[@id='student_application_student_attributes_first_name']",
-    #                 form[headers[2]],
-    #             )
+                # Highest Education
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_overall_education']//a[@class='select2-choice select2-default']",
+                    f"//div[contains(text(),'{form[headers[1]]}')]",
+                )
+
+                # Graduation Year
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_graduation_year']//a[@class='select2-choice select2-default']",
+                    f"//div[contains(text(),'{form[headers[2]]}')]",
+                )
+
+                # Spoken Languages
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_spoken_languages']//ul[@class='select2-choices']",
+                    f"//div[contains(text(),'{form[headers[3]]}')]",
+                )
+
+                # Fields of Study
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_fields_of_study']//ul[@class='select2-choices']",
+                    f"//div[contains(text(),'{form[headers[4]]}')]",
+                )
+
+                # Cross-Cultural Experiences
+                self.select_when_visible(
+                    "//div[@id='s2id_student_application_student_attributes_experiences']//ul[@class='select2-choices']",
+                    f"//div[contains(text(),'{form[headers[5]]}')]",
+                )
+
+                # Tell Us About Yourself
+                self.input_text(
+                    "//textarea[@id='student_application_student_attributes_description']",
+                    form[headers[6]],
+                )
+
+                # Spiritual First Name
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_first_name']",
+                    form[headers[7]],
+                )
+
+                # Spiritual Last Name
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_last_name']",
+                    form[headers[8]],
+                )
+
+                # Spiritual Email
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_email']",
+                    form[headers[9]].replace("email", "email_" + uuid.uuid4().hex),
+                )
+
+                # Spiritual Phone
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_phone']",
+                    form[headers[10]],
+                )
+
+                # Spiritual Relationship
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_description']",
+                    form[headers[11]],
+                )
+
+                # Academic First Name
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_first_name']",
+                    form[headers[12]],
+                )
+
+                # Academic Last Name
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_last_name']",
+                    form[headers[13]],
+                )
+
+                # Academic Email
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_email']",
+                    form[headers[14]].replace("email", "email_" + uuid.uuid4().hex),
+                )
+
+                # Academic Phone
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_phone']",
+                    form[headers[15]],
+                )
+
+                # Academic Relationship
+                self.input_text(
+                    "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_description']",
+                    form[headers[16]],
+                )
+
+                time.sleep(5)
 
     # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
     @pytest.mark.usefixtures("api_url")
