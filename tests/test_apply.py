@@ -288,7 +288,23 @@ class TestSearchInterships:
                     form[headers[16]],
                 )
 
-                time.sleep(5)
+                # Save & Continue to Step 3
+                save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
+                self.driver.find_element(By.XPATH, save_xpath).click()
+
+    def test_apply_forms_pg3(self):
+        # Agree to Terms
+        checkbox_xpath = "//label[@class='boolean optional control-label checkbox']"
+        self.driver.find_element(By.XPATH, checkbox_xpath).click()
+
+        # Save & Continue to Step 4
+        save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
+        self.driver.find_element(By.XPATH, save_xpath).click()
+
+    def test_apply_confirmation_text(self):
+        text_xpath = "//div[@class='confirmation']//h2"
+        confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
+        assert confirmation_text == "Wahoo, you're all done!"
 
     # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
     @pytest.mark.usefixtures("api_url")
