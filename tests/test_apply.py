@@ -8,7 +8,6 @@ import time
 import uuid
 
 import pytest
-
 from selenium.webdriver.common.by import By
 
 
