@@ -28,7 +28,7 @@ class TestSearchInterships:
         self.driver.find_element(By.XPATH, xpath).send_keys(text)
 
     # ******************* TESTS BEGIN HERE ******************* #
-    # return to homepage via the global variable declared in conftest.py
+    # Go to homepage via the global variable declared in conftest.py
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
