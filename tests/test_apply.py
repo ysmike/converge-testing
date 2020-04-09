@@ -13,7 +13,7 @@ from selenium.webdriver.common.by import By
 
 @pytest.mark.usefixtures("browser")
 class TestSearchInterships:
-    # ******************* HELPER FUNCTIONS *******************#
+    # ******************* HELPER FUNCTIONS ******************* #
     def select_when_visible(self, dropdown_xpath, selection_xpath):
         while True:
             try:
@@ -27,7 +27,11 @@ class TestSearchInterships:
     def input_text(self, xpath, text):
         self.driver.find_element(By.XPATH, xpath).send_keys(text)
 
-    # ******************* TESTS BEGIN HERE *******************#
+    # ******************* TESTS BEGIN HERE ******************* #
+    # return to homepage via the global variable declared in conftest.py
+    def test_go_to_homepage(self, api_url):
+        self.driver.get(api_url)
+
     def test_apply_text(self):
         # xpath is indexed from 1, not 0
         link_xpath = "//div[@class='secondary_nav_links']/li[2]"
@@ -304,8 +308,3 @@ class TestSearchInterships:
         text_xpath = "//div[@class='confirmation']//h2"
         confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
         assert confirmation_text == "Wahoo, you're all done!"
-
-    # return to homepage via the global variable, CONVERGE_URL, declared in conftest.py
-    @pytest.mark.usefixtures("api_url")
-    def test_return_to_home(self, api_url):
-        self.driver.get(api_url)
