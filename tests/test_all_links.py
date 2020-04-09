@@ -14,6 +14,9 @@ r.max_redirects = 3
 
 @pytest.mark.usefixtures("browser")
 class TestLinks:
+    def test_go_to_homepage(self, api_url):
+        self.driver.get(api_url)
+
     def test_status_codes(self):
         num_broken_links = 0
         broken_links = {}
