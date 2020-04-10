@@ -10,6 +10,8 @@ from selenium.webdriver.common.by import By
 # Set max redirects to 3 from default of 30
 r = requests.Session()
 r.max_redirects = 3
+# Number of seconds before timeout occurs for each request
+seconds_to_timeout = 5
 
 
 @pytest.mark.usefixtures("browser")
@@ -28,7 +30,7 @@ class TestLinks:
         print(f"\nTesting {len(links)} links on the homepage...\n")
         for link in links:
             try:
-                res = r.get(link)
+                res = r.get(link, timeout=seconds_to_timeout)
                 if res.status_code != 200:
                     raise Exception("Status code is not 200")
             except Exception as e:
