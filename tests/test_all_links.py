@@ -1,5 +1,5 @@
 """
-* Test the status codes of all links on the homepage via 'requerts' module
+* Test the status codes of all links on the homepage via 'requests' module
 """
 
 import requests
