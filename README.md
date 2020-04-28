@@ -17,12 +17,10 @@ the browsers in root directory.
 - [Browser drivers](https://www.selenium.dev/downloads)
 
 ## Notes
-The emails used in the csv forms (tests/forms/*.csv) should have the string
-"email" within them. This is to randomize email addresses using uuid in order to
-avoid the test stopping itself due the email being already in the YWAM Converge
-system.
+The emails to be used in testing which can be found in the csv files (tests/forms/*.csv) should have the string
+"email" within them before the domain. This is to randomize email addresses via uuid since the test stops itself if it runs into a duplicate email.
 
-## Command line example
+## Command Line Example
 To run a tests in parallel (via `pytest-xdist` library) with 4 browser instances
 in production environment, run `pytest tests --env prod -n=4 --dist=loadscope`.
 Here, `--dist=loadscope` flag is necessary to avoid errors as `pytest-dist` by
