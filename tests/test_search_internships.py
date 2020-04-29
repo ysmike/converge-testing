@@ -22,9 +22,7 @@ class TestSearchInterships:
         ]
         filter_text = self.driver.find_element(By.CSS_SELECTOR, ".filter div h3").text
         assert total_text == "Total Internships" and filter_text == "Advanced Filters"
-        # ! self.driver.back() not necessary when using pytest-xdist
-        # ? remove to continue testing on forms?
-        self.driver.back()
 
-    def test_internship_forms(self):
+    def test_internship_links(self):
+        # use requests validate links to each of the internships
         pass
