@@ -1,34 +1,31 @@
 """
-* Test the text and form interaction on '/projects'
+* Test the text and page interaction on '/projects'
 """
 
-import requests
 import pytest
 
 from selenium.webdriver.common.by import By
-
-# Set max redirects to 3 from default of 30
-r = requests.Session()
-r.max_redirects = 3
-# Number of seconds before timeout occurs for each request
-seconds_to_timeout = 5
-
 
 @pytest.mark.usefixtures("browser")
 class TestSearchInterships:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
-    def test_internship_text(self):
+    def test_internship_text(self, transl):
         search_link = self.driver.find_element(
-            By.LINK_TEXT, "Check out the internships"
+            By.LINK_TEXT, transl["check_out_the_internships"]
         )
         search_link.click()
-        total_text = self.driver.find_element(By.CLASS_NAME, "total-projects").text[
-            -17:
-        ]
-        filter_text = self.driver.find_element(By.CSS_SELECTOR, ".filter div h3").text
-        assert total_text == "Total Internships" and filter_text == "Advanced Filters"
+        filter_text = self.driver.find_element(
+            By.XPATH, "//div[@class='filter c3 omega']//div//h3"
+        ).text
+        filter_details_text = self.driver.find_element(
+            By.XPATH, "//div[@id='filter-details']//h4"
+        ).text
+        assert (
+            filter_text == transl["advanced_filters"]
+            and filter_details_text == transl["filter_by_passion"]
+        )
 
     def test_internship_links(self):
         # num_title_mismatch = 0
@@ -51,3 +48,4 @@ class TestSearchInterships:
         # assert (
         #     num_title_mismatch == 0
         # ), f"\n{num_title_mismatch} title mismatch(es) found:\n{title_mismatches}"
+        pass
