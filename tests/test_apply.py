@@ -42,6 +42,7 @@ class TestSearchInterships:
         assert header_text == transl["student_setup_application"]
 
     def test_apply_forms_pg1(self):
+        # TODO: avoid exact text match for localization testing, remove for loops
         FILE_PATH = "tests/forms/apply_pg1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
@@ -182,6 +183,7 @@ class TestSearchInterships:
                 self.driver.find_element(By.XPATH, save_xpath).click()
 
     def test_apply_forms_pg2(self):
+        # TODO: avoid exact text match for localization testing, remove for loops
         FILE_PATH = "tests/forms/apply_pg2.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
