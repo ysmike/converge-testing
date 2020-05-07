@@ -6,6 +6,7 @@ import pytest
 
 from selenium.webdriver.common.by import By
 
+
 @pytest.mark.usefixtures("browser")
 class TestSearchInterships:
     def test_go_to_homepage(self, api_url):
@@ -27,6 +28,7 @@ class TestSearchInterships:
             and filter_details_text == transl["filter_by_passion"]
         )
 
+    # xpath is indexed from 1, not 0
     def test_internship_links(self):
         # num_title_mismatch = 0
         # title_mismatches = {}
