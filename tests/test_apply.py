@@ -32,14 +32,14 @@ class TestSearchInterships:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
-    def test_apply_text(self):
+    def test_apply_text(self, transl):
         # xpath is indexed from 1, not 0
         link_xpath = "//div[@class='secondary_nav_links']/li[2]"
         apply_link = self.driver.find_element(By.XPATH, link_xpath)
         apply_link.click()
         text_xpath = "//div[@class='new-student-header']/h1"
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
-        assert header_text == "Student Setup Application"
+        assert header_text == transl["student_setup_application"]
 
     def test_apply_forms_pg1(self):
         FILE_PATH = "tests/forms/apply_pg1.csv"
@@ -304,7 +304,7 @@ class TestSearchInterships:
         save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_apply_confirmation_text(self):
+    def test_apply_confirmation_text(self, transl):
         text_xpath = "//div[@class='confirmation']//h2"
         confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
-        assert confirmation_text == "Wahoo, you're all done!"
+        assert confirmation_text == transl["submission_confirmation"]
