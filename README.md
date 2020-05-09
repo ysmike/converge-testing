@@ -28,7 +28,8 @@ Breakdown of this command:
 - `--env dev`: set testing environment to development; omit flag to test
   production
 - `-n=4`: run tests in parallel using `4` separate browser instances
-- `--dist=loadscope`: designate a specific browser window for each test file; without
-  this flag, pytest by default consolidates tests from all test files into a single list,
-  randomly chooses a test from that list, and sends that test to an arbitrary
-  browser window - not the wanted behavior as we jump around different urls/DOMs
+- `--dist=loadscope`: designate a specific browser window for each test file
+  when testing in parallel; without this flag, pytest by default consolidates
+  tests from all test files into a single list, randomly chooses a test from
+  that list, and sends that test to an arbitrary browser window - not the wanted
+  behavior as we separate tests by file for various urls/DOMs
