@@ -31,5 +31,5 @@ Breakdown of this command:
 - `--dist=loadscope`: designate a specific browser window for each test file
   when testing in parallel; without this flag, pytest by default consolidates
   tests from all test files into a single list, randomly chooses a test from
-  that list, and sends that test to an arbitrary browser window - not the wanted
-  behavior as we separate tests by file for various urls/DOMs
+  that list, and sends that test to an arbitrary browser window - not the
+  desired behavior as we separate tests into files to target different urls/DOMs
