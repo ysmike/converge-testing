@@ -3,7 +3,8 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 & pytest
 
 ## Prerequisites: 
-- python3
+- [python3](https://www.python.org/download/releases/3.0/)
+- [pipenv](https://pipenv-fork.readthedocs.io/en/latest/)
 
 > Run 'pipenv install' to install below packages in a virtual environment
 - selenium
