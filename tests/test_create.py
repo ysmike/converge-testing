@@ -36,17 +36,16 @@ class TestSearchInterships:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
-    def test_apply_text(self, transl):
+    def test_create_text(self, transl):
         # xpath is indexed from 1, not 0
-        link_xpath = "//div[@class='secondary_nav_links']/li[2]"
-        apply_link = self.driver.find_element(By.XPATH, link_xpath)
-        apply_link.click()
+        link_xpath = "//div[@class='secondary_nav_links']/li[1]"
+        self.driver.find_element(By.XPATH, link_xpath).click()
         text_xpath = "//div[@class='new-student-header']/h1"
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
         assert header_text == transl["student_setup_application"]
 
-    def test_apply_forms_pg1(self):
-        FILE_PATH = "tests/forms/apply_pg1.csv"
+    def test_create_forms_pg1(self):
+        FILE_PATH = "forms/create_pg1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
             headers = next(csv_reader)
@@ -175,8 +174,8 @@ class TestSearchInterships:
         save_xpath = "//form[@id='new_student']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_apply_forms_pg2(self):
-        FILE_PATH = "tests/forms/apply_pg2.csv"
+    def test_create_forms_pg2(self):
+        FILE_PATH = "forms/create_pg2.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
             headers = next(csv_reader)
@@ -283,7 +282,7 @@ class TestSearchInterships:
         save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_apply_forms_pg3(self):
+    def test_create_forms_pg3(self):
         # Agree to Terms
         checkbox_xpath = "//label[@class='boolean optional control-label checkbox']"
         self.driver.find_element(By.XPATH, checkbox_xpath).click()
@@ -292,7 +291,7 @@ class TestSearchInterships:
         save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_apply_confirmation_text(self, transl):
+    def test_create_confirmation_text(self, transl):
         text_xpath = "//div[@class='confirmation']//h2"
         confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
         assert confirmation_text == transl["submission_confirmation"]
