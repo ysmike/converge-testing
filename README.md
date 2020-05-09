@@ -13,8 +13,7 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 - pyyaml
 - requests
   
-> Make sure to download the drivers for the correct OS & browser version. Place
-the browsers in root directory.
+> Download the applicable browser drivers & place them in root directory
 - Browsers (Chrome, MS Edge, Firefox, etc.)
 - [Browser drivers](https://www.selenium.dev/downloads)
 
