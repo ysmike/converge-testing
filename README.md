@@ -24,9 +24,11 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 Breakdown of this command:
 - `pipenv run pytest`: run `pytest` in the Python virtual environment created by
   `pipenv`
-- `--locale es`: set locale to Spanish; omit flag to test English
+- `--locale es`: set testing locale to Spanish; omit flag to test English
 - `--env dev`: set testing environment to development; omit flag to test
   production
-- `-n=4 --dist=loadscope`: run tests in parallel using `4` separate browser
-  instances; use a single browser for each test file (vs. picking random tests
-  out of any test files)
+- `-n=4`: run tests in parallel using `4` separate browser instances
+- `--dist=loadscope`: designate a specific browser window for each test file; without
+  this flag, pytest by default consolidates tests from all test files into a single list,
+  randomly chooses a test from that list, and sends that test to an arbitrary
+  browser window - not the wanted behavior as we jump around different urls/DOMs
