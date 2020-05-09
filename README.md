@@ -22,11 +22,11 @@ the browsers in root directory.
 `pipenv run pytest --locale es --env dev -n=4 --dist=loadscope` 
 
 Breakdown of this command:
-- `pipenv run pytest`: run pytest in the Python virtual environment created by
-  pipenv
+- `pipenv run pytest`: run `pytest` in the Python virtual environment created by
+  `pipenv`
 - `--locale es`: set locale to Spanish; omit flag to test English
-- `--env dev`: set the testing environment to development; omit flag to test
+- `--env dev`: set testing environment to development; omit flag to test
   production
 - `-n=4 --dist=loadscope`: run tests in parallel using `4` separate browser
-  instances; use a single browser for each file (vs. picking random tests out of
-  any files)
+  instances; use a single browser for each test file (vs. picking random tests
+  out of any test files)
