@@ -2,10 +2,13 @@ import pytest
 import selenium
 import yaml
 
+from selenium.webdriver.chrome.service import Service as chrome_serv
+
 # Use a single browser for the whole session
 @pytest.fixture(scope="session")
 def browser(request):
-    driver = selenium.webdriver.Chrome("./chromedriver")
+    driver_path = "./chromedriver"
+    driver = selenium.webdriver.Chrome(service=chrome_serv(driver_path))
     session = request.node
     for item in session.items:
         cls = item.getparent(pytest.Class)
