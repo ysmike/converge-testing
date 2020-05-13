@@ -40,258 +40,255 @@ class TestSearchInterships:
         # xpath is indexed from 1, not 0
         link_xpath = "//div[@class='secondary_nav_links']/li[1]"
         self.driver.find_element(By.XPATH, link_xpath).click()
-        text_xpath = "//div[@class='new-student-header']/h1"
+        text_xpath = "//h1[@class='center']"
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
-        assert header_text == transl["student_setup_application"]
+        assert header_text == transl["project_setup_application"]
 
     def test_create_forms_pg1(self):
         FILE_PATH = "forms/create_pg1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
-            headers = next(csv_reader)
-            row = next(csv_reader)
+            headers, row = next(csv_reader), next(csv_reader)
             form = dict(zip(headers, row))
 
-        # Your Internship
-        self.select_when_visible("//span[@id='select2-chosen-2']")
-
-        # Your Sessions
+        # Salutation
         self.select_when_visible(
-            "//div[@id='s2id_student_application_project_session_id']"
+            "//div[@id='s2id_project_field_host_attributes_salutation']//a"
         )
 
-        # First Name
+        # First Name (Nick name)
         self.input_text(
-            "//input[@id='student_application_student_attributes_first_name']",
-            form[headers[2]],
+            "//input[@id='project_field_host_attributes_first_name']", form[headers[0]]
+        )
+
+        # Initial
+        self.input_text(
+            "//input[@id='project_field_host_attributes_middle_initial']",
+            form[headers[1]],
         )
 
         # Last Name
         self.input_text(
-            "//input[@id='student_application_student_attributes_last_name']",
-            form[headers[3]],
+            "//input[@id='project_field_host_attributes_last_name']", form[headers[2]]
         )
 
         # Email
         self.input_text(
-            "//input[@id='student_application_student_attributes_login_attributes_email']",
-            form[headers[4]].replace("email", "email_" + uuid.uuid4().hex),
+            "//input[@id='project_field_host_attributes_login_attributes_email']",
+            form[headers[3]].replace("email", "email_" + uuid.uuid4().hex),
         )
 
         # Password
         self.input_text(
-            "//input[@id='student_application_student_attributes_login_attributes_password']",
-            form[headers[5]],
+            "//input[@id='project_field_host_attributes_login_attributes_password']",
+            form[headers[4]],
         )
 
         # Password Confirm
         self.input_text(
-            "//input[@id='student_application_student_attributes_login_attributes_password_confirmation']",
-            form[headers[6]],
-        )
-
-        # Marital Status
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_marital_status']//a[@class='select2-choice select2-default']"
-        )
-
-        # Birth Year
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_birthday_1i']//b"
-        )
-
-        # Birth Month
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_birthday_2i']//b"
-        )
-
-        # Birth Day
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_birthday_3i']//b"
-        )
-
-        # Gender
-        gender_xpath = f"//label[contains(text(), '{form[headers[11]].lower()}')]"
-        self.driver.find_element(By.XPATH, gender_xpath).click()
-
-        # St Address
-        self.input_text(
-            "//input[@id='student_application_student_attributes_street_address']",
-            form[headers[12]],
-        )
-
-        # City
-        self.input_text(
-            "//input[@id='student_application_student_attributes_city']",
-            form[headers[13]],
-        )
-
-        # State
-        self.input_text(
-            "//input[@id='student_application_student_attributes_state']",
-            form[headers[14]],
-        )
-
-        # Postal Code
-        self.input_text(
-            "//input[@id='student_application_student_attributes_postal_code']",
-            form[headers[15]],
-        )
-
-        # Country
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_country']//a[@class='select2-choice select2-default']"
+            "//input[@id='project_field_host_attributes_login_attributes_password_confirmation']",
+            form[headers[5]],
         )
 
         # Preferred Phone
         self.input_text(
-            "//input[@id='student_application_student_attributes_preferred_phone']",
-            form[headers[17]],
+            "//input[@id='project_field_host_attributes_preferred_phone']",
+            form[headers[6]],
         )
 
         # Phone Type
         self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_phone_type']//a[@class='select2-choice select2-default']"
+            "//div[@id='s2id_project_field_host_attributes_phone_type']//a"
         )
 
-        # Organization
+        # Existing Organization
+        self.select_when_visible(
+            "//div[@id='s2id_project_organization_id']//a[@class='select2-choice select2-default']"
+        )
+
+        # Role Title
         self.input_text(
-            "//input[@id='student_application_student_attributes_organization']",
-            form[headers[19]],
+            "//input[@id='project_field_host_attributes_role_title']", form[headers[7]]
         )
 
-        # How did you learn about Converge?
-        hearfrom_ywam_xpath = f"//label[@for='student_application_student_attributes_heard_about_ipo_ywam_staff']"
-        hearfrom_facebook_xpath = f"//label[@for='student_application_student_attributes_heard_about_ipo_facebook']"
-        self.driver.find_element(By.XPATH, hearfrom_ywam_xpath).click()
-        self.driver.find_element(By.XPATH, hearfrom_facebook_xpath).click()
-
-        # Applied Before?
-        appliedbefore_xpath = f"//label[@for='student_application_student_attributes_applied_ipo_before_false']"
-        self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
-
-        # Save & Continue to Step 2
-        save_xpath = "//form[@id='new_student']//input[@name='commit']"
-        self.driver.find_element(By.XPATH, save_xpath).click()
-
-    def test_create_forms_pg2(self):
-        FILE_PATH = "forms/create_pg2.csv"
-        with open(FILE_PATH) as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=",")
-            headers = next(csv_reader)
-            row = next(csv_reader)
-            form = dict(zip(headers, row))
-
-        # Passions
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_passions']//ul[@class='select2-choices']"
-        )
-
-        # Highest Education
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_overall_education']//a[@class='select2-choice select2-default']"
-        )
-
-        # Graduation Year
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_graduation_year']//a[@class='select2-choice select2-default']"
-        )
-
-        # Spoken Languages
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_spoken_languages']//ul[@class='select2-choices']"
-        )
-
-        # Fields of Study
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_fields_of_study']//ul[@class='select2-choices']"
-        )
-
-        # Cross-Cultural Experiences
-        self.select_when_visible(
-            "//div[@id='s2id_student_application_student_attributes_experiences']//ul[@class='select2-choices']"
-        )
-
-        # Tell Us About Yourself
+        # Years Associated with Organization
         self.input_text(
-            "//textarea[@id='student_application_student_attributes_description']",
-            form[headers[6]],
-        )
-
-        # Spiritual First Name
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_first_name']",
-            form[headers[7]],
-        )
-
-        # Spiritual Last Name
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_last_name']",
+            "//input[@id='project_field_host_attributes_years_associated_with_organization']",
             form[headers[8]],
         )
 
-        # Spiritual Email
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_email']",
-            form[headers[9]].replace("email", "email_" + uuid.uuid4().hex),
+        # Overall Education
+        self.select_when_visible(
+            "//div[@id='s2id_project_field_host_attributes_overall_education']//a"
         )
 
-        # Spiritual Phone
+        # What has your experience been with YWAM?
+        dts_xpath = "//label[@for='project_field_host_attributes_experience_with_ywam_ywam_dts']"
+        self.driver.find_element(By.XPATH, dts_xpath).click()
+
+        # How did you learn about Converge?
+        hearfrom_ywam_xpath = (
+            "//label[@for='project_field_host_attributes_heard_about_ipo_ywam_staff']"
+        )
+        hearfrom_event_xpath = (
+            "//label[@for='project_field_host_attributes_heard_about_ipo_event']"
+        )
+        self.driver.find_element(By.XPATH, hearfrom_ywam_xpath).click()
+        self.driver.find_element(By.XPATH, hearfrom_event_xpath).click()
+
+        # Contact First Name
         self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_phone']",
+            "//input[@id='project_field_host_attributes_person_references_attributes_0_contact_first_name']",
+            form[headers[9]],
+        )
+
+        # Contact Last Name
+        self.input_text(
+            "//input[@id='project_field_host_attributes_person_references_attributes_0_contact_last_name']",
             form[headers[10]],
         )
 
-        # Spiritual Relationship
+        # Contact Email
         self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_description']",
-            form[headers[11]],
+            "//input[@id='project_field_host_attributes_person_references_attributes_0_contact_email']",
+            form[headers[11]].replace("email", "email_" + uuid.uuid4().hex),
         )
 
-        # Academic First Name
+        # Contact Phone
         self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_first_name']",
+            "//input[@id='project_field_host_attributes_person_references_attributes_0_contact_phone']",
             form[headers[12]],
         )
 
-        # Academic Last Name
+        # How did you know this person?
         self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_last_name']",
+            "//input[@id='project_field_host_attributes_person_references_attributes_0_contact_description']",
             form[headers[13]],
         )
 
-        # Academic Email
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_email']",
-            form[headers[14]].replace("email", "email_" + uuid.uuid4().hex),
-        )
-
-        # Academic Phone
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_phone']",
-            form[headers[15]],
-        )
-
-        # Academic Relationship
-        self.input_text(
-            "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_description']",
-            form[headers[16]],
-        )
-
-        # Save & Continue to Step 3
-        save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
+        # Save & Continue to Step 2
+        save_xpath = "//form[@id='new_project']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
+        time.sleep(5)
 
-    def test_create_forms_pg3(self):
-        # Agree to Terms
-        checkbox_xpath = "//label[@class='boolean optional control-label checkbox']"
-        self.driver.find_element(By.XPATH, checkbox_xpath).click()
+    # def test_create_forms_pg2(self):
+    #     FILE_PATH = "forms/create_pg2.csv"
+    #     with open(FILE_PATH) as csv_file:
+    #         csv_reader = csv.reader(csv_file, delimiter=",")
+    #         headers = next(csv_reader)
+    #         row = next(csv_reader)
+    #         form = dict(zip(headers, row))
 
-        # Save & Continue to Step 4
-        save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
-        self.driver.find_element(By.XPATH, save_xpath).click()
+    #     # Passions
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_passions']//ul[@class='select2-choices']"
+    #     )
 
-    def test_create_confirmation_text(self, transl):
-        text_xpath = "//div[@class='confirmation']//h2"
-        confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
-        assert confirmation_text == transl["submission_confirmation"]
+    #     # Highest Education
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_overall_education']//a[@class='select2-choice select2-default']"
+    #     )
+
+    #     # Graduation Year
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_graduation_year']//a[@class='select2-choice select2-default']"
+    #     )
+
+    #     # Spoken Languages
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_spoken_languages']//ul[@class='select2-choices']"
+    #     )
+
+    #     # Fields of Study
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_fields_of_study']//ul[@class='select2-choices']"
+    #     )
+
+    #     # Cross-Cultural Experiences
+    #     self.select_when_visible(
+    #         "//div[@id='s2id_student_application_student_attributes_experiences']//ul[@class='select2-choices']"
+    #     )
+
+    #     # Tell Us About Yourself
+    #     self.input_text(
+    #         "//textarea[@id='student_application_student_attributes_description']",
+    #         form[headers[6]],
+    #     )
+
+    #     # Spiritual First Name
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_first_name']",
+    #         form[headers[7]],
+    #     )
+
+    #     # Spiritual Last Name
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_last_name']",
+    #         form[headers[8]],
+    #     )
+
+    #     # Spiritual Email
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_email']",
+    #         form[headers[9]].replace("email", "email_" + uuid.uuid4().hex),
+    #     )
+
+    #     # Spiritual Phone
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_phone']",
+    #         form[headers[10]],
+    #     )
+
+    #     # Spiritual Relationship
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_description']",
+    #         form[headers[11]],
+    #     )
+
+    #     # Academic First Name
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_first_name']",
+    #         form[headers[12]],
+    #     )
+
+    #     # Academic Last Name
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_last_name']",
+    #         form[headers[13]],
+    #     )
+
+    #     # Academic Email
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_email']",
+    #         form[headers[14]].replace("email", "email_" + uuid.uuid4().hex),
+    #     )
+
+    #     # Academic Phone
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_phone']",
+    #         form[headers[15]],
+    #     )
+
+    #     # Academic Relationship
+    #     self.input_text(
+    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_description']",
+    #         form[headers[16]],
+    #     )
+
+    #     # Save & Continue to Step 3
+    #     save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
+    #     self.driver.find_element(By.XPATH, save_xpath).click()
+
+    # def test_create_forms_pg3(self):
+    #     # Agree to Terms
+    #     checkbox_xpath = "//label[@class='boolean optional control-label checkbox']"
+    #     self.driver.find_element(By.XPATH, checkbox_xpath).click()
+
+    #     # Save & Continue to Step 4
+    #     save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
+    #     self.driver.find_element(By.XPATH, save_xpath).click()
+
+    # def test_create_confirmation_text(self, transl):
+    #     text_xpath = "//div[@class='confirmation']//h2"
+    #     confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
+    #     assert confirmation_text == transl["submission_confirmation"]
