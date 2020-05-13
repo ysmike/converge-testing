@@ -28,26 +28,24 @@ class TestSearchInterships:
             and filter_details_text == transl["filter_by_passion"]
         )
 
-    # xpath is indexed from 1, not 0
     def test_internship_links(self):
-        # num_title_mismatch = 0
-        # title_mismatches = {}
-        # internships_xpath = (
-        #     "//div[@id='related_projects']//div[@class='project-description']/h3"
-        # )
-        # internships = self.driver.find_elements(By.XPATH, internships_xpath)
-        # for internship in internships:
-        #     outer_title = internship.text
-        #     internship.click()
-        #     inner_title = self.driver.find_element(
-        #         By.XPATH, "//div[@class='primary']//h1"
-        #     ).text
-        #     if inner_title != outer_title:
-        #         num_title_mismatch += 1
-        #         title_mismatches[outer_title] = inner_title
-        #     # TODO: Find a workaround to the StaleElementReferenceError (e.g. count cards and loop through using DOM)
-        #     self.driver.back()
-        # assert (
-        #     num_title_mismatch == 0
-        # ), f"\n{num_title_mismatch} title mismatch(es) found:\n{title_mismatches}"
-        pass
+        num_title_mismatch, title_mismatches = 0, {}
+        internships = self.driver.find_elements(
+            By.XPATH, "//div[@id='related_projects']//a"
+        )
+        # xpath is indexed from 1, not 0
+        for int_num in range(1, len(internships) + 1):
+            internship_xpath = f"//div[@id='related_projects']//a[{int_num}]//div[@class='project-description']//h3"
+            internship = self.driver.find_element(By.XPATH, internship_xpath)
+            outer_title = internship.text
+            internship.click()
+            inner_title_xpath = "//div[@class='primary']//h1"
+            inner_title = self.driver.find_element(By.XPATH, inner_title_xpath).text
+            if inner_title != outer_title:
+                num_title_mismatch += 1
+                title_mismatches[outer_title] = inner_title
+            self.driver.back()
+        assert_str = (
+            f"\n{num_title_mismatch} title mismatch(es) found:\n{title_mismatches}"
+        )
+        assert num_title_mismatch == 0, assert_string
