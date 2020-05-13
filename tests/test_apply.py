@@ -48,8 +48,7 @@ class TestSearchInterships:
         FILE_PATH = "forms/apply_pg1.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
-            headers = next(csv_reader)
-            row = next(csv_reader)
+            headers, row = next(csv_reader), next(csv_reader)
             form = dict(zip(headers, row))
 
         # Your Internship
@@ -161,13 +160,13 @@ class TestSearchInterships:
         )
 
         # How did you learn about Converge?
-        hearfrom_ywam_xpath = f"//label[@for='student_application_student_attributes_heard_about_ipo_ywam_staff']"
-        hearfrom_facebook_xpath = f"//label[@for='student_application_student_attributes_heard_about_ipo_facebook']"
+        hearfrom_ywam_xpath = "//label[@for='student_application_student_attributes_heard_about_ipo_ywam_staff']"
+        hearfrom_facebook_xpath = "//label[@for='student_application_student_attributes_heard_about_ipo_facebook']"
         self.driver.find_element(By.XPATH, hearfrom_ywam_xpath).click()
         self.driver.find_element(By.XPATH, hearfrom_facebook_xpath).click()
 
         # Applied Before?
-        appliedbefore_xpath = f"//label[@for='student_application_student_attributes_applied_ipo_before_false']"
+        appliedbefore_xpath = "//label[@for='student_application_student_attributes_applied_ipo_before_false']"
         self.driver.find_element(By.XPATH, appliedbefore_xpath).click()
 
         # Save & Continue to Step 2
@@ -178,8 +177,7 @@ class TestSearchInterships:
         FILE_PATH = "forms/apply_pg2.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
-            headers = next(csv_reader)
-            row = next(csv_reader)
+            headers, row = next(csv_reader), next(csv_reader)
             form = dict(zip(headers, row))
 
         # Passions
