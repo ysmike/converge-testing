@@ -169,126 +169,195 @@ class TestSearchInterships:
         # Save & Continue to Step 2
         save_xpath = "//form[@id='new_project']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
-        time.sleep(5)
 
-    # def test_create_forms_pg2(self):
-    #     FILE_PATH = "forms/create_pg2.csv"
-    #     with open(FILE_PATH) as csv_file:
-    #         csv_reader = csv.reader(csv_file, delimiter=",")
-    #         headers = next(csv_reader)
-    #         row = next(csv_reader)
-    #         form = dict(zip(headers, row))
+    def test_create_forms_pg2(self):
+        FILE_PATH = "forms/create_pg2.csv"
+        with open(FILE_PATH) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=",")
+            headers = next(csv_reader)
+            row = next(csv_reader)
+            form = dict(zip(headers, row))
 
-    #     # Passions
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_passions']//ul[@class='select2-choices']"
-    #     )
+        # Internship Name
+        self.input_text(
+            "//input[@id='project_name']",
+            form[headers[0]].replace("int_name", "int_name_" + uuid.uuid4().hex),
+        )
 
-    #     # Highest Education
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_overall_education']//a[@class='select2-choice select2-default']"
-    #     )
+        # Teams or Individuals?
+        self.driver.find_element(
+            By.XPATH, f"//button[contains(text(), '{form[headers[1]]}')]"
+        ).click()
 
-    #     # Graduation Year
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_graduation_year']//a[@class='select2-choice select2-default']"
-    #     )
+        # Min Students
+        self.input_text("//input[@id='project_min_students']", form[headers[2]])
 
-    #     # Spoken Languages
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_spoken_languages']//ul[@class='select2-choices']"
-    #     )
+        # Max Students
+        self.input_text("//input[@id='project_max_students']", form[headers[3]])
 
-    #     # Fields of Study
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_fields_of_study']//ul[@class='select2-choices']"
-    #     )
+        # Choose Session Period
+        self.select_when_visible(
+            "//div[@id='s2id_project_project_sessions_attributes_0_session_id']//a[@class='select2-choice select2-default']"
+        )
 
-    #     # Cross-Cultural Experiences
-    #     self.select_when_visible(
-    #         "//div[@id='s2id_student_application_student_attributes_experiences']//ul[@class='select2-choices']"
-    #     )
+        # Cost / Week
+        self.input_text("//input[@id='project_per_week_cost']", form[headers[4]])
 
-    #     # Tell Us About Yourself
-    #     self.input_text(
-    #         "//textarea[@id='student_application_student_attributes_description']",
-    #         form[headers[6]],
-    #     )
+        # Is Cost Final?
+        self.driver.find_element(
+            By.XPATH, "//label[@for='project_per_week_cost_final']"
+        ).click()
 
-    #     # Spiritual First Name
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_first_name']",
-    #         form[headers[7]],
-    #     )
+        # Currency
+        self.select_when_visible(
+            "//div[@id='s2id_project_currency']//a[@class='select2-choice select2-default']"
+        )
 
-    #     # Spiritual Last Name
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_last_name']",
-    #         form[headers[8]],
-    #     )
+        # Required Languages
+        self.select_when_visible(
+            "//div[@id='s2id_project_required_languages']//ul[@class='select2-choices']"
+        )
 
-    #     # Spiritual Email
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_email']",
-    #         form[headers[9]].replace("email", "email_" + uuid.uuid4().hex),
-    #     )
+        # Related Student Passions
+        self.select_when_visible(
+            "//div[@id='s2id_project_related_student_passions']//ul[@class='select2-choices']"
+        )
 
-    #     # Spiritual Phone
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_phone']",
-    #         form[headers[10]],
-    #     )
+        # Related Fields of Study
+        self.select_when_visible(
+            "//div[@id='s2id_project_related_fields_of_study']//ul[@class='select2-choices']"
+        )
 
-    #     # Spiritual Relationship
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_0_contact_description']",
-    #         form[headers[11]],
-    #     )
+        # Education Requirement
+        self.select_when_visible(
+            "//div[@id='s2id_project_student_educational_requirement']//a[@class='select2-choice select2-default']"
+        )
 
-    #     # Academic First Name
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_first_name']",
-    #         form[headers[12]],
-    #     )
+        # Save & Continue to Step 3
+        save_xpath = "//form[@class='simple_form edit_project']//input[@name='commit']"
+        self.driver.find_element(By.XPATH, save_xpath).click()
 
-    #     # Academic Last Name
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_last_name']",
-    #         form[headers[13]],
-    #     )
+    def test_create_forms_pg3(self):
+        FILE_PATH = "forms/create_pg3.csv"
+        with open(FILE_PATH) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=",")
+            headers = next(csv_reader)
+            row = next(csv_reader)
+            form = dict(zip(headers, row))
 
-    #     # Academic Email
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_email']",
-    #         form[headers[14]].replace("email", "email_" + uuid.uuid4().hex),
-    #     )
+        # Publishable Internship?
+        self.driver.find_element(
+            By.XPATH, f"//button[contains(text(),'{form[headers[0]]}')]"
+        ).click()
 
-    #     # Academic Phone
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_phone']",
-    #         form[headers[15]],
-    #     )
+        # Street Address
+        self.input_text(
+            "//input[@id='project_location_street_address']", form[headers[1]]
+        )
 
-    #     # Academic Relationship
-    #     self.input_text(
-    #         "//input[@id='student_application_student_attributes_person_references_attributes_1_contact_description']",
-    #         form[headers[16]],
-    #     )
+        # City
+        self.input_text("//input[@id='project_location_city']", form[headers[2]])
 
-    #     # Save & Continue to Step 3
-    #     save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
-    #     self.driver.find_element(By.XPATH, save_xpath).click()
+        # State
+        self.input_text(
+            "//input[@id='project_location_state_or_province']", form[headers[3]]
+        )
 
-    # def test_create_forms_pg3(self):
-    #     # Agree to Terms
-    #     checkbox_xpath = "//label[@class='boolean optional control-label checkbox']"
-    #     self.driver.find_element(By.XPATH, checkbox_xpath).click()
+        # Country
+        self.select_when_visible("//div[@id='s2id_project_location_country']//a")
 
-    #     # Save & Continue to Step 4
-    #     save_xpath = "//form[@class='simple_form edit_student_application']//input[@name='commit']"
-    #     self.driver.find_element(By.XPATH, save_xpath).click()
+        # Region
+        self.select_when_visible("//div[@id='s2id_project_region']//a")
 
-    # def test_create_confirmation_text(self, transl):
-    #     text_xpath = "//div[@class='confirmation']//h2"
-    #     confirmation_text = self.driver.find_element(By.XPATH, text_xpath).text
-    #     assert confirmation_text == transl["submission_confirmation"]
+        # Internet Distance
+        self.select_when_visible("//div[@id='s2id_project_internet_distance']//a")
+
+        # Type of Location
+        self.driver.find_element(
+            By.XPATH, f"//button[contains(text(),'{form[headers[4]]}')]"
+        ).click()
+
+        # Types of Transportation
+        self.select_when_visible(
+            "//div[@id='s2id_project_transportation_available']//ul"
+        )
+
+        # Describe City
+        self.input_text(
+            "//textarea[@id='project_location_description']", form[headers[5]]
+        )
+
+        # Describe Culture
+        self.input_text(
+            "//textarea[@id='project_culture_description']", form[headers[6]]
+        )
+
+        # Save & Continue to Step 4
+        save_xpath = "//form[@class='simple_form edit_project']//input[@name='commit']"
+        self.driver.find_element(By.XPATH, save_xpath).click()
+
+    def test_create_forms_pg4(self):
+        FILE_PATH = "forms/create_pg4.csv"
+        with open(FILE_PATH) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=",")
+            headers = next(csv_reader)
+            row = next(csv_reader)
+            form = dict(zip(headers, row))
+
+        # Internship Overview
+        self.input_text("//textarea[@id='project_description']", form[headers[0]])
+
+        # Housing Type
+        self.select_when_visible(
+            "//div[@class='input select optional project_housing_type']//a"
+        )
+
+        # Dining Location
+        self.select_when_visible(
+            "//div[@class='input select optional project_dining_location']//a"
+        )
+
+        # Housing Description
+        self.input_text(
+            "//textarea[@id='project_housing_description']", form[headers[1]]
+        )
+
+        # Level of Safety
+        self.select_when_visible(
+            "//div[@class='input select optional project_safety_level']//a"
+        )
+
+        # Safety Description
+        self.input_text(
+            "//textarea[@id='project_challenges_description']", form[headers[2]]
+        )
+
+        # Typical Attire
+        self.select_when_visible(
+            "//div[@class='input select optional project_typical_attire']//a"
+        )
+
+        # Attire Description
+        self.input_text(
+            "//textarea[@id='project_guidelines_description']", form[headers[3]]
+        )
+
+        # Save & Continue to Step 5
+        save_xpath = "//form[@class='simple_form edit_project']//input[@name='commit']"
+        self.driver.find_element(By.XPATH, save_xpath).click()
+
+    def test_create_forms_pg5(self):
+        # Agree to Terms & Conditions
+        self.driver.find_element(By.XPATH, "//label[@for='project_agree_memo']").click()
+
+        # Save & Finish
+        save_xpath = "//form[@class='simple_form edit_project']//input[@name='commit']"
+        self.driver.find_element(By.XPATH, save_xpath).click()
+
+    def test_create_forms_pg6(self, transl):
+        # Agree to Terms & Conditions
+        confirmation_text = self.driver.find_element(
+            By.XPATH, "//div[@class='container']//h2"
+        ).text
+
+        assert confirmation_text == transl["submission_confirmation"]
