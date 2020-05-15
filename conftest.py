@@ -2,13 +2,17 @@ import pytest
 import selenium
 import yaml
 
-from selenium.webdriver.chrome.service import Service as chrome_serv
-
 # Use a single browser for the whole session
 @pytest.fixture(scope="session")
-def browser(request):
-    driver_path = "./chromedriver"
-    driver = selenium.webdriver.Chrome(service=chrome_serv(driver_path))
+def browser(request, browserdriver):
+    # Safari and Firefox drivers are unstable; use Chrome for the prod testing
+    # Keep commands as string to avoid spinning up instances of all browsers
+    drivers = {
+        "chrome": "selenium.webdriver.Chrome()",
+        "safari": "selenium.webdriver.Safari()",
+        "firefox": "selenium.webdriver.Firefox()",
+    }
+    driver = eval(drivers.get(browserdriver))
     session = request.node
     for item in session.items:
         cls = item.getparent(pytest.Class)
@@ -18,20 +22,22 @@ def browser(request):
     driver.quit()
 
 
-# pass args to determine the testing environment: prod, dev, or india
-# set to "prod" by default
-# ex) "pytest --env dev"
-# pass args to determine the testing lcoale: en or es
-# set to "en" by default
-# ex) "pytest --locale es"
-# TODO: Add args for selecting different browsers
-# TODO: consolidate comments for command line options (browser, locale, environment)
+# Command line argument options:
+# --env prod | dev | india
+# --locale en | es
+# --browserdriver chrome | edge | firefox
 def pytest_addoption(parser):
     parser.addoption(
         "--env", action="store", default="prod", help="env options: prod, dev, india"
     )
     parser.addoption(
         "--locale", action="store", default="en", help="locale options: en, es"
+    )
+    parser.addoption(
+        "--browserdriver",
+        action="store",
+        default="chrome",
+        help="browserdriver options: chrome, edge, firefox",
     )
 
 
@@ -47,11 +53,15 @@ def locale(request):
     return request.config.getoption("--locale")
 
 
+# store the locale input in the "browserdriver" fixture
+@pytest.fixture(scope="session")
+def browserdriver(request):
+    return request.config.getoption("--browserdriver")
+
+
 # set "api_url" as a fixture that can be passed as an argument in tests
 @pytest.fixture(scope="session")
 def api_url(env, locale):
-    # don't append locale to url if it is English
-    locale = "" if locale == "en" else locale
     if env == "dev":
         return f"https://glenis.ywamconverge.org/{locale}"  # L10N by Glenis
     elif env == "prod":
