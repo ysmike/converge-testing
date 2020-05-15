@@ -13,7 +13,7 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 - pyyaml
 - requests
   
-> Download the chrome and gecko drivers & place them in `/usr/local/bin` in order to add them to the PATH variable
+> Download the chrome and gecko drivers & place them in `/usr/local/bin` in order to add them to PATH
 - Browsers (Chrome, Safari, Firefox)
 - [Browser drivers](https://www.selenium.dev/downloads) (Safari doesn't need a browser driver)
 
