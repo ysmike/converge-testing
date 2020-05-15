@@ -38,7 +38,10 @@ class TestSearchInterships:
 
     def test_apply_text(self, transl):
         # xpath is indexed from 1, not 0
-        link_xpath = "//div[@class='secondary_nav_links']/li[2]"
+        apply_text = "nav_apply"
+        link_xpath = (
+            f"//nav[@class='container']//a[contains(text(),'{transl[apply_text]}')]"
+        )
         self.driver.find_element(By.XPATH, link_xpath).click()
         text_xpath = "//div[@class='new-student-header']/h1"
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
