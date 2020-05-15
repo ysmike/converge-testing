@@ -147,5 +147,7 @@ cython_debug/
 # Browser drivers
 chromedriver
 msedgedriver
+geckodriver
 chromedriver.exe
 msedgedriver.exe
+geckodriver.exe
