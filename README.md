@@ -13,13 +13,13 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 - pyyaml
 - requests
   
-> Download the applicable browser drivers & place them in root directory
-- Browsers (Chrome, MS Edge, Firefox, etc.)
-- [Browser drivers](https://www.selenium.dev/downloads)
+> Download the chrome and gecko drivers & place them in `/usr/local/bin` in order to add them to the PATH variable
+- Browsers (Chrome, Safari, Firefox)
+- [Browser drivers](https://www.selenium.dev/downloads) (Safari doesn't need a browser driver)
 
 ## Command Line Example
 
-`pipenv run pytest --locale=es --env=dev -n=4 --dist=loadscope` 
+`pipenv run pytest --locale=es --env=dev --browserdriver=chrome -n=4 --dist=loadscope` 
 
 Breakdown of this command:
 - `pipenv run pytest`: run `pytest` in the Python virtual environment created by
@@ -27,7 +27,8 @@ Breakdown of this command:
 - `--locale=es`: set testing locale to Spanish; omit flag to test English
 - `--env=dev`: set testing environment to development; omit flag to test
   production
-- `-n=4`: run tests in parallel using `4` separate browser instances
+- `--browserdriver=chrome`: set testing browser to chrome; `firefox` and `safari` are also available
+- `-n=4`: run tests in parallel using `4` separate browser instances (required flag to separately test creating internship and applying for an internship)
 - `--dist=loadscope`: designate a specific browser window for each test file
   when testing in parallel; without this flag, pytest by default consolidates
   tests from all test files into a single list, randomly chooses a test from
