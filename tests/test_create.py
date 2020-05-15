@@ -38,7 +38,8 @@ class TestSearchInterships:
 
     def test_create_text(self, transl):
         # xpath is indexed from 1, not 0
-        link_xpath = "//div[@class='secondary_nav_links']/li[1]"
+        create_an_internship_text = "nav_create_an_internship"
+        link_xpath = f"//nav[@class='container']//a[contains(text(),'{transl[create_an_internship_text]}')]"
         self.driver.find_element(By.XPATH, link_xpath).click()
         text_xpath = "//h1[@class='center']"
         header_text = self.driver.find_element(By.XPATH, text_xpath).text
@@ -167,7 +168,7 @@ class TestSearchInterships:
         )
 
         # Save & Continue to Step 2
-        save_xpath = "//form[@id='new_project']//input[@name='commit']"
+        save_xpath = "//form[@class='simple_form new_project']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
     def test_create_forms_pg2(self):
