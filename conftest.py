@@ -5,12 +5,12 @@ import yaml
 # Use a single browser for the whole session
 @pytest.fixture(scope="session")
 def browser(request, browserdriver):
-    # Safari and Firefox drivers are unstable; use Chrome for the prod testing
     # Keep commands as string to avoid spinning up instances of all browsers
     drivers = {
         "chrome": "selenium.webdriver.Chrome()",
         "safari": "selenium.webdriver.Safari()",
         "firefox": "selenium.webdriver.Firefox()",
+        # "edge": "selenium.webdriver.Edge()", # requires an 'MicrosoftWebDriver.exe' per error
     }
     driver = eval(drivers.get(browserdriver))
     session = request.node
