@@ -27,7 +27,7 @@ Breakdown of this command:
 - `--env=dev`: set testing environment to development; omit flag to test
   production
 - `--browserdriver=chrome`: set testing browser to chrome; `firefox` and `safari` are also available
-- `-n=4`: run tests in parallel using `4` separate browser instances (required flag to separately test creating internship and applying for an internship)
+- `-n=5`: run tests in parallel using `5` separate browser instances (required flag to separately test creating internship and applying for an internship)
 - `--dist=loadscope`: designate a specific browser window for each test file
   when testing in parallel; without this flag, pytest by default consolidates
   tests from all test files into a single list, randomly chooses a test from
