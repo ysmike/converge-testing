@@ -170,7 +170,7 @@ class TestCreate:
         save_xpath = "//form[@class='simple_form new_project']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_create_forms_pg2(self):
+    def test_create_forms_pg2(self, transl):
         FILE_PATH = "forms/create_pg2.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
@@ -185,8 +185,9 @@ class TestCreate:
         )
 
         # Teams or Individuals?
+        individual_text = "individual"
         self.driver.find_element(
-            By.XPATH, f"//button[contains(text(), '{form[headers[1]]}')]"
+            By.XPATH, f"//button[contains(text(), '{transl[individual_text]}')]"
         ).click()
 
         # Min Students
@@ -237,7 +238,7 @@ class TestCreate:
         save_xpath = "//form[@class='simple_form edit_project']//input[@name='commit']"
         self.driver.find_element(By.XPATH, save_xpath).click()
 
-    def test_create_forms_pg3(self):
+    def test_create_forms_pg3(self, transl):
         FILE_PATH = "forms/create_pg3.csv"
         with open(FILE_PATH) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
@@ -246,8 +247,9 @@ class TestCreate:
             form = dict(zip(headers, row))
 
         # Publishable Internship?
+        public_text = "project_location_can_be_public"
         self.driver.find_element(
-            By.XPATH, f"//button[contains(text(),'{form[headers[0]]}')]"
+            By.XPATH, f"//button[contains(text(),'{transl[public_text]}')]"
         ).click()
 
         # Street Address
@@ -274,7 +276,7 @@ class TestCreate:
 
         # Type of Location
         self.driver.find_element(
-            By.XPATH, f"//button[contains(text(),'{form[headers[4]]}')]"
+            By.XPATH, f"//div[@class='location-col2']//button[1]"
         ).click()
 
         # Types of Transportation
