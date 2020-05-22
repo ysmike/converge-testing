@@ -19,7 +19,7 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 
 ## Command Line Example
 
-`pipenv run pytest --locale=es --env=dev --browserdriver=chrome -n=4 --dist=loadscope` 
+`pipenv run pytest --locale=es --env=dev --browserdriver=chrome -n=5 --dist=loadscope` 
 
 Breakdown of this command:
 - `pipenv run pytest`: run `pytest` in the Python virtual environment created by
