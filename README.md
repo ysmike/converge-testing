@@ -6,7 +6,7 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 - [python3](https://www.python.org/download/releases/3.0/)
 - [pipenv](https://pipenv-fork.readthedocs.io/en/latest/)
 
-> Run 'pipenv install' to install below packages in a virtual environment
+> Run `pipenv install` to install below packages in a virtual environment
 - selenium
 - pytest
 - pytest-xdist
@@ -18,7 +18,6 @@ Web browser testing for [YWAM Converge](https://ywamconverge.org/) via Selenium
 - [Browser drivers](https://www.selenium.dev/downloads) (Safari doesn't need a browser driver)
 
 ## Command Line Example
-
 `pipenv run pytest --locale=es --env=dev --browserdriver=chrome -n=5 --dist=loadscope` 
 
 Breakdown of this command:
