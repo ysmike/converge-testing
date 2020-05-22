@@ -8,8 +8,8 @@ def browser(request, browserdriver):
     # Keep commands as string to avoid spinning up instances of all browsers
     drivers = {
         "chrome": "selenium.webdriver.Chrome()",
-        "safari": "selenium.webdriver.Safari()",
         "firefox": "selenium.webdriver.Firefox()",
+        # "safari": "selenium.webdriver.Safari()", # error with parallel testing & forms
         # "edge": "selenium.webdriver.Edge()", # requires an 'MicrosoftWebDriver.exe' per error
     }
     driver = eval(drivers.get(browserdriver))
