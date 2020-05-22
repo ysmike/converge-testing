@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 
 
 @pytest.mark.usefixtures("browser")
-class TestSearchInterships:
+class TestApply:
     # ******************* HELPER FUNCTIONS ******************* #
     def select_when_visible(
         self,
@@ -37,7 +37,6 @@ class TestSearchInterships:
         self.driver.get(api_url)
 
     def test_apply_text(self, transl):
-        # xpath is indexed from 1, not 0
         apply_text = "nav_apply"
         link_xpath = (
             f"//nav[@class='container']//a[contains(text(),'{transl[apply_text]}')]"
