@@ -15,7 +15,7 @@ seconds_to_timeout = 5
 
 
 @pytest.mark.usefixtures("browser")
-class TestLinks:
+class TestHome:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
