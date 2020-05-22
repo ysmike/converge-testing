@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 
 @pytest.mark.usefixtures("browser")
-class TestSearchInterships:
+class TestSearch:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
