@@ -19,7 +19,7 @@ class TestHome:
     def test_go_to_homepage(self, api_url):
         self.driver.get(api_url)
 
-    def test_status_codes(self):
+    def test_all_homepage_links(self):
         num_broken_links = 0
         broken_links = {}
         links = [
@@ -34,7 +34,7 @@ class TestHome:
                 if res.status_code != 200:
                     raise Exception("Status code is not 200")
             except Exception as e:
-                # print(link, e, sep=" --> ", end="\n\n") # for debugging
+                print(link, e, sep=" --> ", end="\n\n")  # for debugging
                 broken_links[link] = res.status_code
                 num_broken_links += 1
         assert (
