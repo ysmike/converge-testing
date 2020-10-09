@@ -14,7 +14,7 @@ pytest-xdist = "*"
 atomicwrites = "*"
 pyyaml = "*"
 selenium = "*"
-pytest-cov = "*"
+pytest-timeout = "*"
 
 [requires]
 python_version = "3.7"
