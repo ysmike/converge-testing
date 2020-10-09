@@ -11,7 +11,7 @@ mail_from = gmail_user
 mail_to = "xcalibur220@gmail.com"
 mail_subject = "YWAM Converge Monthly Testing Results"
 mail_msg_body = os.popen(
-    "pipenv run pytest --env=dev tests/test_donate.py --cov=test_donate"
+    "pipenv run pytest --timeout=60 --timeout_method=thread --env=dev -n=5 --dist=loadscope --max-worker-restart=0 -v"
 ).read()
 mail_msg = f"""\
 From: {mail_from}
