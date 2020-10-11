@@ -8,6 +8,7 @@ gmail_password = "converge7&"
 
 # Create email contents
 mail_from = gmail_user
+# mail_to = "admin@ywamocnj.org"
 mail_to = "xcalibur220@gmail.com"
 mail_subject = "YWAM Converge Monthly Testing Results"
 mail_msg_body = os.popen(
