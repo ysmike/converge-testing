@@ -3,13 +3,14 @@ import smtplib
 import os
 
 # Set global variables
+# gmail_user = "admin.test@ywamconverge.org"
+# gmail_password = "Converge7&"
 gmail_user = "ywamconvergetesting@gmail.com"
 gmail_password = "converge7&"
 
 # Create email contents
 mail_from = gmail_user
-# mail_to = "admin@ywamocnj.org"
-mail_to = "xcalibur220@gmail.com"
+mail_to = "admin.test@ywamconverge.org"
 mail_subject = "YWAM Converge Monthly Testing Results"
 mail_msg_body = os.popen(
     "pipenv run pytest --timeout=60 --timeout_method=thread --env=dev -n=5 --dist=loadscope --max-worker-restart=0 -v"
