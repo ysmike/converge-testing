@@ -3,10 +3,8 @@ import smtplib
 import os
 
 # Set global variables
-# gmail_user = "admin.test@ywamconverge.org"
-# gmail_password = "Converge7&"
-gmail_user = "ywamconvergetesting@gmail.com"
-gmail_password = "converge7&"
+gmail_user = "admin.test@ywamconverge.org"
+gmail_password = "Converge7&"
 
 # Create email contents
 mail_from = gmail_user
